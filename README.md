@@ -1,1 +1,24 @@
 # MyRegex
+Regular expression engine by derivatives.
+
+For presentation at [iOSDC Japan 2023](https://iosdc.jp/2023/).
+
+**This is a sample for theoretical illustration only, not for practical use.**
+
+# Usage
+
+```swift
+let ios : MyRegex = .concat(.char("i"), .concat(.char("O"), .char("S"))) // "iOS"
+let ww : MyRegex = .concat(.char("W"), .char("W")) // "WW"
+let dc : MyRegex = .concat(.char("D"), .char("C")) // "DC"
+let two_or_three : MyRegex = .or(.char("2"), .char("3"))
+
+let testRegex : MyRegex = .concat(.or(ios, ww), .concat(dc, .star(two_or_three))) // "(iOS|WW)DC(2|3)*"
+
+let result1 = testRegex.wholeMatch(to: "iOSDC")
+print(result1) // true
+let result2 = testRegex.wholeMatch(to: "WWDC22")
+print(result2) // true
+let result3 = testRegex.wholeMatch(to: "iOSDC23")
+print(result3) // true
+```
