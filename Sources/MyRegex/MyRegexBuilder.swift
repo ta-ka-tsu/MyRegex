@@ -10,7 +10,7 @@ public protocol MyRegexComponent {
 }
 
 @resultBuilder
-struct MyRegexBuilder {
+public struct MyRegexBuilder {
     static public func buildBlock(_ components: MyRegexComponent...) -> [MyRegexComponent] {
         components
     }
@@ -87,7 +87,7 @@ public struct Optionally : MyRegexComponent {
 }
 
 @resultBuilder
-struct MyAlternationBuilder {
+public struct MyAlternationBuilder {
     static public func buildBlock(_ components: MyRegexComponent...) -> [MyRegexComponent] {
         components
     }
