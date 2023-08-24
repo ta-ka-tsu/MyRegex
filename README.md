@@ -12,9 +12,11 @@ let ios : MyRegex = .concat(.char("i"), .concat(.char("O"), .char("S"))) // "iOS
 let ww : MyRegex = .concat(.char("W"), .char("W")) // "WW"
 let dc : MyRegex = .concat(.char("D"), .char("C")) // "DC"
 let two_or_three : MyRegex = .or(.char("2"), .char("3")) // "2|3"
+let twice_two_or_three : MyRegex = .concat(two_or_three, two_or_three) // "(2|3){2}"
+let optional_twice_two_or_three : MyRegex = .or(.epsilon, twice_two_or_three) // ((2|3){2})?
 
-// "(iOS|WW)DC(2|3)*"
-let testRegex : MyRegex = .concat(.or(ios, ww), .concat(dc, .star(two_or_three))) 
+// "(iOS|WW)DC((2|3){2}*)?"
+let testRegex : MyRegex = .concat(.or(ios, ww), .concat(dc, optional_twice_two_or_three)) 
 
 let result1 = testRegex.wholeMatch(to: "iOSDC")
 print(result1) // true
@@ -27,19 +29,21 @@ print(result3) // true
 You can also use "RegexBuilder".
 
 ```swift
-// "(iOS|WW)DC(2|3)*"
+// "(iOS|WW)DC((2|3){2})?"
 let testRegex = MyRegex {
-  ChoiceOf {
-    "iOS"
-    "WW"
-  }
-  "DC"
-  ZeroOrMore {
-      ChoiceOf {
-          "2"
-          "3"
-      }
-  }
+    ChoiceOf {
+        "iOS"
+        "WW"
+    }
+    "DC"
+    Optionally {
+        Repeat(count: 2) {
+            ChoiceOf {
+                "2"
+                "3"
+            }
+        }
+    }
 }
 let result1 = testRegex.wholeMatch(to: "iOSDC")
 print(result1) // true
