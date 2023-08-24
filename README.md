@@ -8,6 +8,8 @@ For presentation at [iOSDC Japan 2023](https://iosdc.jp/2023/).
 # Usage
 
 ```swift
+import MyRegex
+
 let ios : MyRegex = .concat(.char("i"), .concat(.char("O"), .char("S"))) // "iOS"
 let ww : MyRegex = .concat(.char("W"), .char("W")) // "WW"
 let dc : MyRegex = .concat(.char("D"), .char("C")) // "DC"
@@ -29,6 +31,8 @@ print(result3) // true
 You can also use "RegexBuilder".
 
 ```swift
+import MyRegex
+
 // "(iOS|WW)DC((2|3){2})?"
 let testRegex = MyRegex {
     ChoiceOf {
