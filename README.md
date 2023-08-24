@@ -11,9 +11,10 @@ For presentation at [iOSDC Japan 2023](https://iosdc.jp/2023/).
 let ios : MyRegex = .concat(.char("i"), .concat(.char("O"), .char("S"))) // "iOS"
 let ww : MyRegex = .concat(.char("W"), .char("W")) // "WW"
 let dc : MyRegex = .concat(.char("D"), .char("C")) // "DC"
-let two_or_three : MyRegex = .or(.char("2"), .char("3"))
+let two_or_three : MyRegex = .or(.char("2"), .char("3")) // "2|3"
 
-let testRegex : MyRegex = .concat(.or(ios, ww), .concat(dc, .star(two_or_three))) // "(iOS|WW)DC(2|3)*"
+// "(iOS|WW)DC(2|3)*"
+let testRegex : MyRegex = .concat(.or(ios, ww), .concat(dc, .star(two_or_three))) 
 
 let result1 = testRegex.wholeMatch(to: "iOSDC")
 print(result1) // true
@@ -26,6 +27,7 @@ print(result3) // true
 You can also use "RegexBuilder".
 
 ```swift
+// "(iOS|WW)DC(2|3)*"
 let testRegex = MyRegex {
   ChoiceOf {
     "iOS"
