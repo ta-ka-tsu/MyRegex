@@ -54,14 +54,7 @@ extension MyRegex {
 
 extension MyRegex {
     public func wholeMatch(to string: String) -> Bool {
-        debug(self)
-        var result : MyRegex = self
-        for c in string {
-            result = result.derivative(with: c)
-            debug(result)
-        }
-        return result.matchToEmptyString()
-//        return string.reduce( self ) { $0.derivative(with: $1) }.matchToEmptyString()
+        return string.reduce( self ) { $0.derivative(with: $1) }.matchToEmptyString()
     }
 }
 
