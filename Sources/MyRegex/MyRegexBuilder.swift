@@ -17,7 +17,7 @@ public struct MyRegexBuilder {
 }
 
 extension MyRegex : MyRegexComponent {
-    public init(@MyRegexBuilder buildElements: @escaping () -> [MyRegexComponent]) {
+    public init(@MyRegexBuilder buildElements: () -> [MyRegexComponent]) {
         let components = buildElements()
         self.init(components)
     }
@@ -54,7 +54,7 @@ extension String : MyRegexComponent {
 
 public struct ZeroOrMore : MyRegexComponent {
     let components: [MyRegexComponent]
-    public init(@MyRegexBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+    public init(@MyRegexBuilder buildComponents: () -> [MyRegexComponent]) {
         components = buildComponents()
     }
     
@@ -65,7 +65,7 @@ public struct ZeroOrMore : MyRegexComponent {
 
 public struct OneOrMore : MyRegexComponent {
     let components: [MyRegexComponent]
-    public init(@MyRegexBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+    public init(@MyRegexBuilder buildComponents: () -> [MyRegexComponent]) {
         components = buildComponents()
     }
     
@@ -77,7 +77,7 @@ public struct OneOrMore : MyRegexComponent {
 
 public struct Optionally : MyRegexComponent {
     let components: [MyRegexComponent]
-    public init(@MyRegexBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+    public init(@MyRegexBuilder buildComponents: () -> [MyRegexComponent]) {
         components = buildComponents()
     }
     
@@ -89,11 +89,11 @@ public struct Optionally : MyRegexComponent {
 public struct Repeat : MyRegexComponent {
     let range : ClosedRange<Int>
     let component : MyRegexComponent
-    public init(count: Int, @MyRegexBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+    public init(count: Int, @MyRegexBuilder buildComponents: () -> [MyRegexComponent]) {
         self.init(count...count, buildComponents: buildComponents)
     }
     
-    public init(_ expression: ClosedRange<Int>, @MyRegexBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+    public init(_ expression: ClosedRange<Int>, @MyRegexBuilder buildComponents: () -> [MyRegexComponent]) {
         range = expression
         component = Concatinate(components: buildComponents())
     }
@@ -124,7 +124,7 @@ public struct MyAlternationBuilder {
 
 public struct ChoiceOf : MyRegexComponent {
     let components: [MyRegexComponent]
-    public init(@MyAlternationBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+    public init(@MyAlternationBuilder buildComponents: () -> [MyRegexComponent]) {
         components = buildComponents()
     }
     
