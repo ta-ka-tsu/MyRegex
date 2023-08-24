@@ -54,5 +54,6 @@ The supported components are as follows
 - OneOrMore
 - Optionally
 - ChoiceOf
+- Repeat
 
 CharacterClass is not supported.
