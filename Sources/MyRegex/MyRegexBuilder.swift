@@ -86,6 +86,35 @@ public struct Optionally : MyRegexComponent {
     }
 }
 
+public struct Repeat : MyRegexComponent {
+    let range : ClosedRange<Int>
+    let component : MyRegexComponent
+    public init(count: Int, @MyRegexBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+        self.init(count...count, buildComponents: buildComponents)
+    }
+    
+    public init(_ expression: ClosedRange<Int>, @MyRegexBuilder buildComponents: @escaping () -> [MyRegexComponent]) {
+        range = expression
+        component = Concatinate(components: buildComponents())
+    }
+
+    private func repeatConstant(_ component: MyRegexComponent, count: Int) -> MyRegex {
+        precondition(count >= 0, "count must be greater than or equal to 0")
+        switch count {
+        case 0:
+            return .epsilon
+        case 1:
+            return component.toRegex()
+        default:
+            return repeatElement(component, count: count - 1).reduce(component.toRegex()) { .concat($1.toRegex(), $0) }
+        }
+    }
+
+    public func toRegex() -> MyRegex {
+        return range.reversed().reduce( .empty ) { .or(repeatConstant(component, count: $1), $0) }
+    }
+}
+
 @resultBuilder
 public struct MyAlternationBuilder {
     static public func buildBlock(_ components: MyRegexComponent...) -> [MyRegexComponent] {

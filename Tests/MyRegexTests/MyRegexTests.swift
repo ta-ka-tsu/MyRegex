@@ -135,4 +135,32 @@ final class TestTests: XCTestCase {
         XCTAssertTrue(r.wholeMatch(to: "ww"))
         XCTAssertTrue(r.wholeMatch(to: "wwwwwwwwww"))
     }
+    
+    func testBuilderRepeatCount() throws {
+        let r = MyRegex {
+            Repeat(count: 3) {
+                "w"
+            }
+        }
+        XCTAssertFalse(r.wholeMatch(to: ""))
+        XCTAssertFalse(r.wholeMatch(to: "w"))
+        XCTAssertFalse(r.wholeMatch(to: "ww"))
+        XCTAssertTrue(r.wholeMatch(to: "www"))
+        XCTAssertFalse(r.wholeMatch(to: "wwww"))
+        XCTAssertFalse(r.wholeMatch(to: "wwwww"))
+    }
+    
+    func testBuilderRepeatRange() throws {
+        let r = MyRegex {
+            Repeat(2...4) {
+                "w"
+            }
+        }
+        XCTAssertFalse(r.wholeMatch(to: ""))
+        XCTAssertFalse(r.wholeMatch(to: "w"))
+        XCTAssertTrue(r.wholeMatch(to: "ww"))
+        XCTAssertTrue(r.wholeMatch(to: "www"))
+        XCTAssertTrue(r.wholeMatch(to: "wwww"))
+        XCTAssertFalse(r.wholeMatch(to: "wwwww"))
+    }
 }
