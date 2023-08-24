@@ -22,3 +22,35 @@ print(result2) // true
 let result3 = testRegex.wholeMatch(to: "iOSDC23")
 print(result3) // true
 ```
+
+You can also use "RegexBuilder".
+
+```swift
+let testRegex = MyRegex {
+  ChoiceOf {
+    "iOS"
+    "WW"
+  }
+  "DC"
+  ZeroOrMore {
+      ChoiceOf {
+          "2"
+          "3"
+      }
+  }
+}
+let result1 = testRegex.wholeMatch(to: "iOSDC")
+print(result1) // true
+let result2 = testRegex.wholeMatch(to: "WWDC22")
+print(result2) // true
+let result3 = testRegex.wholeMatch(to: "iOSDC23")
+print(result3) // true
+```
+
+The supported components are as follows
+- ZeroOrMore
+- OneOrMore
+- Optionally
+- ChoiceOf
+
+CharacterClass is not supported.
