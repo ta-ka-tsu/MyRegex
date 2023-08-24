@@ -11,7 +11,7 @@ public protocol MyRegexComponent {
 
 @resultBuilder
 struct MyRegexBuilder {
-    static func buildBlock(_ components: MyRegexComponent...) -> [MyRegexComponent] {
+    static public func buildBlock(_ components: MyRegexComponent...) -> [MyRegexComponent] {
         components
     }
 }
@@ -88,7 +88,7 @@ public struct Optionally : MyRegexComponent {
 
 @resultBuilder
 struct MyAlternationBuilder {
-    static func buildBlock(_ components: MyRegexComponent...) -> [MyRegexComponent] {
+    static public func buildBlock(_ components: MyRegexComponent...) -> [MyRegexComponent] {
         components
     }
 }
