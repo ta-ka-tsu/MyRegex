@@ -1,5 +1,5 @@
 # MyRegex
-Regular expression engine by derivatives.
+Regular expression engine by "derivatives".
 
 For presentation at [iOSDC Japan 2023](https://iosdc.jp/2023/).
 
